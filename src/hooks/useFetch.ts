@@ -7,22 +7,22 @@ const useFetch = (URL: string) => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchData = async () => {
-    try {
-      const res = await axios.get<RootTypes>(URL);
-      const result = res.data;
-      setData(result);
-      setIsLoading(false);
-    } catch (err: any) {
-      setError(err.message);
-      setIsLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get<RootTypes>(URL);
+        const result = res.data;
+        setData(result);
+        setIsLoading(false);
+      } catch (err: any) {
+        setError(err.message);
+        setIsLoading(false);
+      }
+    };
+
     fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [URL]);
+
   return {data, isLoading, error};
 };
 
