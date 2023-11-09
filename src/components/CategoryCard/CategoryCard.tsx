@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  Image,
-  TouchableWithoutFeedback,
-  // TouchableOpacity,
-} from 'react-native';
+import {View, Text, Image, TouchableOpacity} from 'react-native';
 import {CategoryTypes} from '../../types';
 import styles from './CategoryCard.style';
 
@@ -15,19 +9,26 @@ type PropTypes = {
 };
 
 function CategoryCard({category, onSelect}: PropTypes) {
+  const {strCategory, strCategoryThumb} = category || {};
+  const handlePress = () => {
+    onSelect(strCategory);
+  };
   return (
-    <TouchableWithoutFeedback onPress={() => onSelect(category?.strCategory)}>
-      <View style={styles.container}>
-        <View style={styles.imageBox}>
-          <Image
-            style={styles.image}
-            source={{uri: category?.strCategoryThumb}}
-            resizeMode="contain"
-          />
-        </View>
-        <Text style={styles.title}>{category?.strCategory}</Text>
+    <TouchableOpacity
+      onPress={handlePress}
+      activeOpacity={0.7}
+      style={styles.container}>
+      <View style={styles.imageBox}>
+        <Image
+          style={styles.image}
+          source={{uri: strCategoryThumb}}
+          resizeMode="contain"
+          alt={strCategory}
+          onError={() => console.log('Failed to load image')}
+        />
+        <Text style={styles.title}>{strCategory}</Text>
       </View>
-    </TouchableWithoutFeedback>
+    </TouchableOpacity>
   );
 }
 
